@@ -130,7 +130,8 @@ docker compose exec firewall iptables -L FORWARD -n -v --line-numbers
 dmesg | grep FW-DROP        # no host Linux
 ```
 
-![alt text](image.png)
+<img width="1140" height="513" alt="image" src="https://github.com/user-attachments/assets/1481dab1-bddf-4382-8e06-cbde8f373b20" />
+
 
 ## 5. Conclusão
 
