@@ -3,7 +3,7 @@
 **Instituto Federal Goiano — Campus Ceres | Bacharelado em Sistemas de Informação**
 **Disciplina:** Segurança da Informação — **Docente:** Prof. Roitier Campos Gonçalves
 **Aluno:** Felipe — **Data:** 15/10/2026
-**Repositório:** `<URL_DO_REPOSITORIO_GITHUB>`
+**Repositório:** [`<URL_DO_REPOSITORIO_GITHUB>`](https://github.com/FelipeFire18/Trabalho-Parcial---Seguran-a-de-Redes.git)
 
 ---
 
@@ -130,7 +130,8 @@ docker compose exec firewall iptables -L FORWARD -n -v --line-numbers
 dmesg | grep FW-DROP        # no host Linux
 ```
 
-> **Inserir aqui:** capturas de tela das saídas dos testes (positivos e negativos) e do `iptables -L -n -v`.
+<img width="1140" height="513" alt="image" src="https://github.com/user-attachments/assets/9c685304-998d-43f7-8ba0-193aee64afe0" />
+
 
 ## 5. Conclusão
 
