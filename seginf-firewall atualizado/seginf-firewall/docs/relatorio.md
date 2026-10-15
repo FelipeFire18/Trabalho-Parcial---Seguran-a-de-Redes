@@ -3,7 +3,7 @@
 **Instituto Federal Goiano — Campus Ceres | Bacharelado em Sistemas de Informação**
 **Disciplina:** Segurança da Informação — **Docente:** Prof. Roitier Campos Gonçalves
 **Aluno:** Felipe — **Data:** 15/10/2026
-**Repositório:** `<URL_DO_REPOSITORIO_GITHUB>`
+**Repositório:** [`<URL_DO_REPOSITORIO_GITHUB>`](https://github.com/FelipeFire18/Trabalho-Parcial---Seguran-a-de-Redes.git)
 
 ---
 
