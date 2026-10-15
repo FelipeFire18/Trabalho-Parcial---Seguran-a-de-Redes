@@ -1,0 +1,87 @@
+# Laboratório: Firewall Linux (Netfilter/iptables) com redes segmentadas
+# LAN (cliente) -> FIREWALL -> DMZ (web) -> FIREWALL -> DB (banco isolado)
+
+services:
+  firewall:
+    build: ./firewall
+    container_name: firewall
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      lan:
+        ipv4_address: 172.20.0.254
+      dmz:
+        ipv4_address: 172.21.0.254
+      db:
+        ipv4_address: 172.22.0.254
+    restart: unless-stopped
+
+  client:
+    build: ./client
+    container_name: lan-client
+    cap_add:
+      - NET_ADMIN          # apenas para criar rotas estáticas via firewall
+    networks:
+      lan:
+        ipv4_address: 172.20.0.10
+    extra_hosts:
+      - "dmz-web:172.21.0.10"
+      - "dmz-db:172.22.0.10"
+    depends_on:
+      - firewall
+
+  web:
+    build: ./web
+    container_name: dmz-web
+    cap_add:
+      - NET_ADMIN          # apenas para criar rotas estáticas via firewall
+    volumes:
+      - ./web/html:/usr/share/nginx/html:ro
+    networks:
+      dmz:
+        ipv4_address: 172.21.0.10
+    extra_hosts:
+      - "dmz-db:172.22.0.10"
+    depends_on:
+      - firewall
+
+  db:
+    image: postgres:16-alpine
+    container_name: dmz-db
+    environment:
+      POSTGRES_USER: portal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-portal_lab_2026}
+      POSTGRES_DB: portal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      db:
+        ipv4_address: 172.22.0.10
+    depends_on:
+      - firewall
+
+networks:
+  lan:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+  dmz:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+  db:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
+
+volumes:
+  pgdata:
